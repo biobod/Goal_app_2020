@@ -1,0 +1,11 @@
+{
+  "plugins": ["@babel/plugin-proposal-class-properties"],
+  "env": {
+    "test": {
+      "plugins": [["istanbul", {
+        "all": true,
+        "include": ["client/src/**/*.js"]
+      }]]
+    }
+  }
+}
