@@ -10,26 +10,26 @@ const app = express()
 mysqlx
   .getSession({
     user: 'root',
-    password: '291Barlok!',
+    password: 'root',
     host: 'localhost',
-    port: '33060'
+    port: '33060',
   })
   .then(function (session) {
     var db = session.getSchema('test');
-    // Use the collection 'my_collection'
-    var myColl = db.getCollection('my_collection');
+    // Use the collection 'test_table'
+    var myColl = db.getCollection('myCollection');
     // Specify which document to find with Collection.find() and
     // fetch it from the database with .execute()
     return myColl
-      .find('name like :param')
+      .find('name like :name')
+      .bind({ name: 'Laurie' })
       .limit(1)
-      .bind('param', 'L%')
       .execute(function (doc) {
         console.log(doc);
       });
   })
   .catch(function (err) {
-    console.log(err);
+    console.log('DB error', err);
   });
 
 
