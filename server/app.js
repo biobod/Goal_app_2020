@@ -7,6 +7,7 @@ const port = 3000
 const app = express()
 
 
+
 mysqlx
   .getSession({
     user: 'root',
@@ -15,18 +16,40 @@ mysqlx
     port: '33060',
   })
   .then(function (session) {
-    var db = session.getSchema('test');
+
+    // here we use collection
+    var testdb = session.getSchema('test');
     // Use the collection 'test_table'
-    var myColl = db.getCollection('myCollection');
+    var myCollection = testdb.getCollection('myCollection');
     // Specify which document to find with Collection.find() and
     // fetch it from the database with .execute()
-    return myColl
+    myCollection
       .find('name like :name')
       .bind({ name: 'Laurie' })
       .limit(1)
       .execute(function (doc) {
         console.log(doc);
       });
+
+    // here we use table
+    // TODO define a difference between collection and table
+    var employeesDB = session.getSchema('employees');
+    // Use the collection 'test_table'
+    var salaries = employeesDB.getTable('salaries');
+    // Specify which document to find with Collection.find() and
+    // fetch it from the database with .execute()
+    return salaries
+      .select()
+      .where('emp_no like :emp_no')
+      .bind('emp_no', 10071)
+      // .limit(1)
+      .execute()
+      .then(myResult => {
+        var myRows = myResult.fetchAll();
+        myRows.forEach(row => {
+          console.log(row);
+        });
+      })
   })
   .catch(function (err) {
     console.log('DB error', err);
