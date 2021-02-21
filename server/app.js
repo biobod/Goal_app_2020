@@ -1,19 +1,18 @@
 const express = require('express')
 const cors = require('cors')
 const bodyParser =  require('body-parser');
-var mysqlx = require('@mysql/xdevapi');
+const mysqlx = require('@mysql/xdevapi');
+const { serverConfig } = require('../config')
 
-const port = 3000
+
 const app = express()
-
-
 
 mysqlx
   .getSession({
     user: 'root',
     password: 'root',
     host: 'localhost',
-    port: '33060',
+    port: serverConfig.sessionPort,
   })
   .then(function (session) {
 
@@ -66,6 +65,6 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.listen(port, () => console.log(`Server is running on port ${port}`))
+app.listen(serverConfig.port, () => console.log(`Server is running on port ${serverConfig.port}`))
 app.on('exit', () => app.close())
 app.on('uncaughtException', () => app.close())
