@@ -1,4 +1,4 @@
-import { GET_USER_STARTED } from './ActionTypes';
+import { GET_USER_STARTED, GET_USER_SUCCESS, GET_USER_FAILURE } from './ActionTypes';
 
 const initialState = {
 };
@@ -7,7 +7,24 @@ const reducer = (state = initialState, action) => {
     case GET_USER_STARTED: {
       return {
         ...state,
-        userFetching: true,
+        employeesFetching: true,
+        isNoResultsFound: false,
+      };
+    }
+    case GET_USER_SUCCESS: {
+      return {
+        ...state,
+        employees: action.data,
+        isNoResultsFound: !action.data.length,
+        employeesFetching: false,
+      };
+    }
+    case GET_USER_FAILURE: {
+      return {
+        ...state,
+        error: action.error,
+        employeesFetching: false,
+        isNoResultsFound: false,
       };
     }
     default: return state;

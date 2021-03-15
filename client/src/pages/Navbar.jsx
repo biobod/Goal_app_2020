@@ -31,7 +31,7 @@ const Navbar = ({ history, location }) => {
       <AppBar position="static">
         <Tabs value={pathname} onChange={changeTab} aria-label="simple tabs example">
           <Tab label="Home" {...a11yProps(0)} value="/" />
-          <Tab label="User Search" {...a11yProps(1)} value="/users-search" />
+          <Tab label="User Search" {...a11yProps(1)} value="/employees" />
         </Tabs>
       </AppBar>
     </div>

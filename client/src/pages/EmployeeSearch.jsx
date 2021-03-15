@@ -2,21 +2,21 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { TextField, Table, Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { getUser } from '../redux/Actions';
+import { getEmployee } from '../redux/Actions';
 
-const UserSearch = ({ onGetUser }) => {
+const EmployeeSearch = ({ onGetEmployee }) => {
   const [userName, setUserName] = useState('');
   const changeValue = ({ target: { value } }) => setUserName(value);
   return (
     <div>
       <TextField label="Seaech a User" value={userName} onChange={changeValue} />
-      <Button onClick={() => onGetUser(userName)} color="secondary"> Get User </Button>
+      <Button onClick={() => onGetEmployee(userName)} color="secondary"> Get User </Button>
     </div>
   );
 };
 
-UserSearch.propTypes = {
-  onGetUser: PropTypes.func.isRequired,
+EmployeeSearch.propTypes = {
+  onGetEmployee: PropTypes.func.isRequired,
 };
 
-export default connect(null, { onGetUser: getUser })(UserSearch);
+export default connect(null, { onGetEmployee: getEmployee })(EmployeeSearch);
