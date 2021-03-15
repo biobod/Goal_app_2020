@@ -14,8 +14,9 @@ router.get('/employee', (req, res) => {
 });
 
 router.get('/salaries', (req, res) => {
-  employeeController.findSalaries(req.query.name);
-  // res.send(req.query.name);
+  employeeController.findSalaries(req.query.id)
+    .then((result) => res.send(result))
+    .catch((error) => new Error(error));
 });
 
 module.exports = router;

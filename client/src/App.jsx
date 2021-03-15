@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import UserSearch from './pages/EmployeeSearch.jsx';
+import SalaryPage from './pages/SalaryPage.jsx';
 import Navbar from './pages/Navbar.jsx';
 import PageContent from './components/PageContent';
 import store from './redux/store';
@@ -19,6 +20,11 @@ const App = () => (
         <Route exact path="/employees">
           <PageContent>
             <UserSearch />
+          </PageContent>
+        </Route>
+        <Route exact path="/salaries">
+          <PageContent>
+            <SalaryPage />
           </PageContent>
         </Route>
         <Redirect from="/" to="/employees" />

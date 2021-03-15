@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import {
   TextField,
   Table,
@@ -16,7 +17,8 @@ import {
 } from '@material-ui/core';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import PropTypes from 'prop-types';
-import { getEmployee } from '../redux/Actions';
+import { getEmployee, getSalary } from '../redux/Actions';
+import { gender, indexes } from '../constants';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,20 +27,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const indexes = {
-  emp_no: 0,
-  birth_date: 1,
-  first_name: 2,
-  last_name: 3,
-  gender: 4,
-  hire_date: 5,
-};
-const gender = {
-  M: 'Male',
-  F: 'Female',
-};
 const EmployeeSearch = ({
-  onGetEmployee, employees, isNoResultsFound, employeesFetching,
+  onGetEmployee, employees, isNoResultsFound, employeesFetching, onGetSalary, history,
 }) => {
   const classes = useStyles();
   const [userName, setUserName] = useState('');
@@ -52,6 +42,11 @@ const EmployeeSearch = ({
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const getEmployeeSalary = (employee) => {
+    onGetSalary(employee[indexes.emp_no]);
+    history.push('/salaries');
   };
 
   return (
@@ -93,8 +88,8 @@ const EmployeeSearch = ({
                               <Button
                                 variant="contained"
                                 color="primary"
-                                size={"small"}
-                                onClick={console.log}
+                                size="small"
+                                onClick={() => getEmployeeSalary(row)}
                               >
                                 Salary Info
                               </Button>
@@ -133,8 +128,12 @@ const EmployeeSearch = ({
 
 EmployeeSearch.propTypes = {
   onGetEmployee: PropTypes.func.isRequired,
+  onGetSalary: PropTypes.func.isRequired,
+  isNoResultsFound: PropTypes.bool.isRequired,
+  employeesFetching: PropTypes.bool.isRequired,
+  employees: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(({ employees, isNoResultsFound, employeesFetching }) => ({
   employees, isNoResultsFound, employeesFetching,
-}), { onGetEmployee: getEmployee })(EmployeeSearch);
+}), { onGetEmployee: getEmployee, onGetSalary: getSalary })(withRouter(EmployeeSearch));

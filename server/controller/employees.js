@@ -4,17 +4,11 @@ const findEmployee = (name) => model().then(({ session }) => session.sql(`SELECT
   .execute()
   .then((myResult) => myResult.fetchAll()));
 
-const findSalaries = (name) => model().then(({ salaries }) => salaries.select()
+const findSalaries = (id) => model().then(({ salaries }) => salaries.select()
   .where('emp_no like :emp_no')
-  .bind('emp_no', 10021)
-  // .limit(1)
+  .bind('emp_no', id)
   .execute()
-  .then((myResult) => {
-    const myRows = myResult.fetchAll();
-    myRows.forEach((row) => {
-      console.log(row);
-    });
-  }));
+  .then((myResult) => myResult.fetchAll()));
 
 const employeeController = {
   findSalaries,
