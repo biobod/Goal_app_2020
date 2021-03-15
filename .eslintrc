@@ -1,5 +1,6 @@
 {
   "extends": ["airbnb", "plugin:import/react"],
+  "parser": "babel-eslint",
   "rules": {
     "react/jsx-props-no-spreading": 0,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
