@@ -1,4 +1,4 @@
-export const indexes = {
+export const employeesIndexes = {
   emp_no: 0,
   birth_date: 1,
   first_name: 2,
@@ -10,3 +10,10 @@ export const gender = {
   M: 'Male',
   F: 'Female',
 };
+
+export const salaryIndexes = {
+  emp_no: 0,
+  salary: 1,
+  from_date: 2,
+  to_date: 3,
+}

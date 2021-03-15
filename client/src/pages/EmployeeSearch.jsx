@@ -18,12 +18,21 @@ import {
 import { Alert, AlertTitle } from '@material-ui/lab';
 import PropTypes from 'prop-types';
 import { getEmployee, getSalary } from '../redux/Actions';
-import { gender, indexes } from '../constants';
+import { gender, employeesIndexes } from '../constants';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     marginTop: theme.spacing(2),
+  },
+  search: {
+    display: 'flex',
+    alignContent: 'baseline',
+    marginBottom: 40,
+    '& > button': {
+      marginTop: 20,
+      marginLeft: 10,
+    },
   },
 }));
 
@@ -45,14 +54,16 @@ const EmployeeSearch = ({
   };
 
   const getEmployeeSalary = (employee) => {
-    onGetSalary(employee[indexes.emp_no]);
+    onGetSalary(employee[employeesIndexes.emp_no]);
     history.push('/salaries');
   };
 
   return (
     <div>
-      <TextField label="Search a employee" value={userName} onChange={changeValue} />
-      <Button onClick={() => onGetEmployee(userName)} variant="contained" color="secondary"> Get User </Button>
+      <div className={classes.search}>
+        <TextField label="Search a employee" value={userName} onChange={changeValue} />
+        <Button onClick={() => onGetEmployee(userName)} variant="contained" color="secondary" size="small">Find Employee</Button>
+      </div>
       {employeesFetching ? (
         <div className={classes.root}>
           <LinearProgress />
@@ -77,13 +88,13 @@ const EmployeeSearch = ({
                       {employees
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .map((row) => (
-                          <TableRow hover key={`${row[indexes.first_name]}-${row[indexes.last_name]}`}>
+                          <TableRow hover key={`${row[employeesIndexes.first_name]}-${row[employeesIndexes.last_name]}`}>
                             <TableCell component="th" scope="row">
-                              {`${row[indexes.first_name]} ${row[indexes.last_name]}`}
+                              {`${row[employeesIndexes.first_name]} ${row[employeesIndexes.last_name]}`}
                             </TableCell>
-                            <TableCell align="right">{gender[row[indexes.gender]]}</TableCell>
-                            <TableCell align="right">{new Date(row[indexes.hire_date]).toDateString()}</TableCell>
-                            <TableCell align="right">{new Date(row[indexes.birth_date]).toDateString()}</TableCell>
+                            <TableCell align="right">{gender[row[employeesIndexes.gender]]}</TableCell>
+                            <TableCell align="right">{new Date(row[employeesIndexes.hire_date]).toISOString().split('T')[0]}</TableCell>
+                            <TableCell align="right">{new Date(row[employeesIndexes.birth_date]).toISOString().split('T')[0]}</TableCell>
                             <TableCell align="right">
                               <Button
                                 variant="contained"

@@ -10,6 +10,10 @@ import {
 const initialState = {
   employees: [],
   selectedEmployeeId: null,
+  isNoResultsFound: false,
+  employeesFetching: false,
+  salaryFetching: false,
+  error: null,
 };
 const reducer = (state = initialState, action) => {
   switch (action.type) {
