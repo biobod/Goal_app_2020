@@ -14,7 +14,7 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { employeesIndexes, salaryIndexes } from '../constants';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,7 +32,7 @@ const SalaryPage = ({
     history.push('/employees');
     return null;
   }
-  const name = `${employee[employeesIndexes.first_name]} ${employee[employeesIndexes.last_name]}`;
+  const name = `${employee.first_name} ${employee.last_name}`;
   return (
     <div>
       <h3>{name}</h3>
@@ -52,12 +52,12 @@ const SalaryPage = ({
             </TableHead>
             <TableBody>
               {salaries.map((row) => (
-                <TableRow hover key={`${row[salaryIndexes.from_date]}}`}>
+                <TableRow hover key={`${row.from_date}}`}>
                   <TableCell component="th" scope="row">
-                    {new Date(row[salaryIndexes.from_date]).toISOString().split('T')[0]}
+                    {new Date(row.from_date).toISOString().split('T')[0]}
                   </TableCell>
-                  <TableCell>{new Date(row[salaryIndexes.to_date]).toISOString().split('T')[0]}</TableCell>
-                  <TableCell>{`${row[salaryIndexes.salary]} $`}</TableCell>
+                  <TableCell>{new Date(row.to_date).toISOString().split('T')[0]}</TableCell>
+                  <TableCell>{`${row.salary} $`}</TableCell>
                 </TableRow>
               ))}
               <TableRow key="total">
@@ -65,7 +65,7 @@ const SalaryPage = ({
                   <strong>Total Salary Paid:</strong>
                 </TableCell>
                 <TableCell />
-                <TableCell><strong>{`${_.sumBy(salaries, (o) => o[salaryIndexes.salary])} $`}</strong></TableCell>
+                <TableCell><strong>{`${_.sumBy(salaries, (o) => o.salary)} $`}</strong></TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -90,7 +90,7 @@ SalaryPage.propTypes = {
 };
 
 export default connect((state) => ({
-  employee: state.employees.find((u) => u[employeesIndexes.emp_no] === state.selectedEmployeeId),
+  employee: state.employees.find((u) => u.emp_no === state.selectedEmployeeId),
   salaryFetching: state.salaryFetching,
   salaries: state.salaries,
 }))(withRouter(SalaryPage));

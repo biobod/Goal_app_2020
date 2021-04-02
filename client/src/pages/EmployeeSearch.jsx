@@ -18,7 +18,7 @@ import {
 import { Alert, AlertTitle } from '@material-ui/lab';
 import PropTypes from 'prop-types';
 import { getEmployee, getSalary } from '../redux/Actions';
-import { gender, employeesIndexes } from '../constants';
+import { gender } from '../constants';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,8 +53,8 @@ const EmployeeSearch = ({
     setPage(0);
   };
 
-  const getEmployeeSalary = (employee) => {
-    onGetSalary(employee[employeesIndexes.emp_no]);
+  const getEmployeeSalary = ({ emp_no }) => {
+    onGetSalary(emp_no);
     history.push('/salaries');
   };
 
@@ -88,13 +88,13 @@ const EmployeeSearch = ({
                       {employees
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .map((row) => (
-                          <TableRow hover key={`${row[employeesIndexes.first_name]}-${row[employeesIndexes.last_name]}`}>
+                          <TableRow hover key={`${row.first_name}-${row.last_name}`}>
                             <TableCell component="th" scope="row">
-                              {`${row[employeesIndexes.first_name]} ${row[employeesIndexes.last_name]}`}
+                              {`${row.first_name} ${row.last_name}`}
                             </TableCell>
-                            <TableCell align="right">{gender[row[employeesIndexes.gender]]}</TableCell>
-                            <TableCell align="right">{new Date(row[employeesIndexes.hire_date]).toISOString().split('T')[0]}</TableCell>
-                            <TableCell align="right">{new Date(row[employeesIndexes.birth_date]).toISOString().split('T')[0]}</TableCell>
+                            <TableCell align="right">{gender[row.gender]}</TableCell>
+                            <TableCell align="right">{new Date(row.hire_date).toISOString().split('T')[0]}</TableCell>
+                            <TableCell align="right">{new Date(row.birth_date).toISOString().split('T')[0]}</TableCell>
                             <TableCell align="right">
                               <Button
                                 variant="contained"

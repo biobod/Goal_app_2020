@@ -16,7 +16,7 @@ export const getEmployee = (name) => (dispatch) => {
     method: 'get',
     baseURL: `http://localhost:${config.port}/`,
     params: { name },
-  }).then((res) => dispatch({ type: GET_USER_SUCCESS, data: res.data }))
+  }).then(({ data }) => dispatch({ type: GET_USER_SUCCESS, data }))
     .catch((error) => dispatch({ type: GET_USER_FAILURE, error }));
 };
 
@@ -27,6 +27,6 @@ export const getSalary = (id) => (dispatch) => {
     method: 'get',
     baseURL: `http://localhost:${config.port}/`,
     params: { id },
-  }).then((res) => dispatch({ type: GET_SALARY_SUCCESS, data: res.data, id }))
+  }).then(({ data }) => dispatch({ type: GET_SALARY_SUCCESS, data, id }))
     .catch((error) => dispatch({ type: GET_SALARY_FAILURE, error }));
 };
