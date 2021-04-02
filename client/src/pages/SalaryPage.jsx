@@ -74,9 +74,11 @@ const SalaryPage = ({
     </div>
   );
 };
+
 SalaryPage.defaultProps = {
   employee: null,
-}
+};
+
 SalaryPage.propTypes = {
   salaries: PropTypes.arrayOf(PropTypes.object).isRequired,
   // eslint-disable-next-line react/forbid-prop-types
